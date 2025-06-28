@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useSelector } from 'react-redux'
 import ApperIcon from '@/components/ApperIcon'
 import Button from '@/components/atoms/Button'
-
+import { AuthContext } from '@/App'
 const Header = () => {
   const location = useLocation()
+  const { logout } = useContext(AuthContext)
+  const { user, isAuthenticated } = useSelector((state) => state.user)
 
   const navigation = [
     { name: 'Quotation Builder', href: '/', icon: 'FileText' },
@@ -72,8 +75,24 @@ const Header = () => {
             })}
           </nav>
 
-          {/* Actions */}
+{/* Actions */}
           <div className="flex items-center space-x-3">
+            {isAuthenticated && (
+              <div className="hidden md:flex items-center space-x-3">
+                <span className="text-sm text-surface-600">
+                  Hello, {user?.firstName || user?.name || 'User'}
+                </span>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  icon="LogOut"
+                  onClick={logout}
+                >
+                  Logout
+                </Button>
+              </div>
+            )}
+            
             <Button
               variant="secondary"
               size="sm"

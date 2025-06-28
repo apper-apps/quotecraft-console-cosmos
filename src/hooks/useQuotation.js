@@ -6,9 +6,31 @@ export const useQuotation = (quotationId = null) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const createEmptyQuotation = () => ({
+const createEmptyQuotation = () => ({
     Id: Date.now(),
     templateId: null,
+    client_name: '',
+    client_address: '',
+    quotation_number: `QT-${new Date().getFullYear()}-${String(Date.now()).slice(-3)}`,
+    date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    header_text: JSON.stringify({
+      companyName: '',
+      companyAddress: '',
+      logo: null
+    }),
+    footer_text: JSON.stringify({
+      contactEmail: '',
+      contactPhone: '',
+      website: '',
+      bankDetails: ''
+    }),
+    terms_and_conditions: '',
+    subtotal: 0,
+    tax: 0,
+    total: 0,
+    currency: 'THB',
+    items: [],
+    // Legacy fields for UI compatibility
     clientInfo: {
       name: '',
       company: '',
@@ -16,7 +38,6 @@ export const useQuotation = (quotationId = null) => {
       email: '',
       phone: ''
     },
-    items: [],
     header: {
       companyName: '',
       companyAddress: '',
@@ -30,10 +51,6 @@ export const useQuotation = (quotationId = null) => {
       bankDetails: ''
     },
     terms: '',
-    subtotal: 0,
-    tax: 0,
-    total: 0,
-    currency: 'THB',
     validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
@@ -45,8 +62,42 @@ export const useQuotation = (quotationId = null) => {
       setError(null)
       
       if (id) {
-        const data = await quotationService.getById(parseInt(id))
-        setQuotation(data)
+const data = await quotationService.getById(parseInt(id))
+        
+        // Convert database fields to UI format for compatibility
+        const processedData = data ? {
+          ...data,
+          clientInfo: {
+            name: data.client_name || '',
+            company: '',
+            address: data.client_address || '',
+            email: '',
+            phone: ''
+          },
+          header: data.header_text ? 
+            (typeof data.header_text === 'string' ? 
+              JSON.parse(data.header_text) : data.header_text) 
+            : {
+              companyName: '',
+              companyAddress: '',
+              quoteNumber: data.quotation_number || '',
+              logo: null
+            },
+          footer: data.footer_text ? 
+            (typeof data.footer_text === 'string' ? 
+              JSON.parse(data.footer_text) : data.footer_text) 
+            : {
+              contactEmail: '',
+              contactPhone: '',
+              website: '',
+              bankDetails: ''
+            },
+          terms: data.terms_and_conditions || '',
+          validUntil: data.date || '',
+          items: data.items || []
+        } : null;
+        
+        setQuotation(processedData)
       } else {
         setQuotation(createEmptyQuotation())
       }

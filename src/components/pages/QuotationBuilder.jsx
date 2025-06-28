@@ -16,9 +16,34 @@ const QuotationBuilder = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const createEmptyQuotation = () => ({
+const createEmptyQuotation = () => ({
     Id: Date.now(),
     templateId: null,
+    client_name: '',
+    client_address: '',
+    quotation_number: `QT-${new Date().getFullYear()}-${String(Date.now()).slice(-3)}`,
+    date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    header_text: JSON.stringify({
+      companyName: '',
+      companyAddress: '',
+      logo: null
+    }),
+    footer_text: JSON.stringify({
+      contactEmail: '',
+      contactPhone: '',
+      website: '',
+      bankDetails: ''
+    }),
+    terms_and_conditions: `1. Payment is due within 30 days of invoice date.
+2. All prices are in Thai Baht (THB) and include VAT.
+3. This quotation is valid for 30 days from the date issued.
+4. Additional charges may apply for changes to specifications.`,
+    subtotal: 0,
+    tax: 0,
+    total: 0,
+    currency: 'THB',
+    items: [],
+    // Legacy fields for UI compatibility
     clientInfo: {
       name: '',
       company: '',
@@ -26,7 +51,6 @@ const QuotationBuilder = () => {
       email: '',
       phone: ''
     },
-    items: [],
     header: {
       companyName: '',
       companyAddress: '',
@@ -43,10 +67,6 @@ const QuotationBuilder = () => {
 2. All prices are in Thai Baht (THB) and include VAT.
 3. This quotation is valid for 30 days from the date issued.
 4. Additional charges may apply for changes to specifications.`,
-    subtotal: 0,
-    tax: 0,
-    total: 0,
-    currency: 'THB',
     validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
@@ -63,7 +83,40 @@ const QuotationBuilder = () => {
       ])
       
       setTemplates(templatesData)
-      setQuotation(quotationData || createEmptyQuotation())
+const processedQuotation = quotationData ? {
+        ...quotationData,
+        // Convert database fields to UI format for compatibility
+        clientInfo: {
+          name: quotationData.client_name || '',
+          company: '',
+          address: quotationData.client_address || '',
+          email: '',
+          phone: ''
+        },
+        header: quotationData.header_text ? 
+          (typeof quotationData.header_text === 'string' ? 
+            JSON.parse(quotationData.header_text) : quotationData.header_text) 
+          : {
+            companyName: '',
+            companyAddress: '',
+            quoteNumber: quotationData.quotation_number || '',
+            logo: null
+          },
+        footer: quotationData.footer_text ? 
+          (typeof quotationData.footer_text === 'string' ? 
+            JSON.parse(quotationData.footer_text) : quotationData.footer_text) 
+          : {
+            contactEmail: '',
+            contactPhone: '',
+            website: '',
+            bankDetails: ''
+          },
+        terms: quotationData.terms_and_conditions || '',
+        validUntil: quotationData.date || '',
+        items: quotationData.items || []
+      } : createEmptyQuotation();
+      
+      setQuotation(processedQuotation)
     } catch (err) {
       setError(err.message)
     } finally {

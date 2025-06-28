@@ -67,7 +67,7 @@ const TemplateManager = () => {
     }
 
     try {
-      await templateService.delete(templateId)
+await templateService.deleteTemplate(templateId)
       setTemplates(templates.filter(t => t.Id !== templateId))
       toast.success('Template deleted successfully!')
     } catch (err) {
