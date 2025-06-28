@@ -1,0 +1,188 @@
+[
+  {
+    "Id": 1,
+    "name": "Modern Business",
+    "description": "Clean and professional template for business services",
+    "layout": {
+      "headerStyle": "modern",
+      "colorScheme": "blue",
+      "fontFamily": "Inter"
+    },
+    "styles": {
+      "primaryColor": "#2C3E50",
+      "secondaryColor": "#3498DB",
+      "accentColor": "#E74C3C"
+    },
+    "defaultHeader": {
+      "companyName": "Your Company Name",
+      "companyAddress": "Company Address Here",
+      "quoteNumber": "QT-YYYY-XXX"
+    },
+    "defaultFooter": {
+      "contactEmail": "contact@company.com",
+      "contactPhone": "+66 XX XXX XXXX",
+      "website": "www.company.com",
+      "bankDetails": "Bank Details Here"
+    },
+    "defaultTerms": "1. Payment is due within 30 days of invoice date.\n2. All prices are in Thai Baht (THB) and include VAT.\n3. This quotation is valid for 30 days from the date issued.",
+    "isDefault": true,
+    "featured": true,
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  },
+  {
+    "Id": 2,
+    "name": "Creative Studio",
+    "description": "Vibrant template perfect for creative agencies and studios",
+    "layout": {
+      "headerStyle": "creative",
+      "colorScheme": "purple",
+      "fontFamily": "Poppins"
+    },
+    "styles": {
+      "primaryColor": "#8E44AD",
+      "secondaryColor": "#E74C3C",
+      "accentColor": "#F39C12"
+    },
+    "defaultHeader": {
+      "companyName": "Creative Studio",
+      "companyAddress": "Studio Address",
+      "quoteNumber": "CS-YYYY-XXX"
+    },
+    "defaultFooter": {
+      "contactEmail": "hello@studio.com",
+      "contactPhone": "+66 XX XXX XXXX",
+      "website": "www.studio.com",
+      "bankDetails": "Bank Information"
+    },
+    "defaultTerms": "1. 50% deposit required to start project.\n2. Final payment due upon project completion.\n3. Revisions beyond scope may incur additional charges.",
+    "isDefault": false,
+    "featured": true,
+    "createdAt": "2024-01-05T00:00:00Z",
+    "updatedAt": "2024-01-05T00:00:00Z"
+  },
+  {
+    "Id": 3,
+    "name": "Tech Minimal",
+    "description": "Minimalist design for technology companies",
+    "layout": {
+      "headerStyle": "minimal",
+      "colorScheme": "gray",
+      "fontFamily": "Inter"
+    },
+    "styles": {
+      "primaryColor": "#2C3E50",
+      "secondaryColor": "#95A5A6",
+      "accentColor": "#3498DB"
+    },
+    "defaultHeader": {
+      "companyName": "Tech Company",
+      "companyAddress": "Tech Address",
+      "quoteNumber": "TC-YYYY-XXX"
+    },
+    "defaultFooter": {
+      "contactEmail": "info@techco.com",
+      "contactPhone": "+66 XX XXX XXXX",
+      "website": "www.techco.com",
+      "bankDetails": "Banking Details"
+    },
+    "defaultTerms": "1. Payment terms: Net 30 days.\n2. Support and maintenance terms apply.\n3. Source code delivery upon final payment.",
+    "isDefault": false,
+    "featured": false,
+    "createdAt": "2024-01-10T00:00:00Z",
+    "updatedAt": "2024-01-10T00:00:00Z"
+  },
+  {
+    "Id": 4,
+    "name": "Restaurant & Hospitality",
+    "description": "Warm template designed for restaurants and hospitality businesses",
+    "layout": {
+      "headerStyle": "elegant",
+      "colorScheme": "warm",
+      "fontFamily": "Poppins"
+    },
+    "styles": {
+      "primaryColor": "#8B4513",
+      "secondaryColor": "#D2691E",
+      "accentColor": "#CD853F"
+    },
+    "defaultHeader": {
+      "companyName": "Restaurant Name",
+      "companyAddress": "Restaurant Address",
+      "quoteNumber": "RH-YYYY-XXX"
+    },
+    "defaultFooter": {
+      "contactEmail": "booking@restaurant.com",
+      "contactPhone": "+66 XX XXX XXXX",
+      "website": "www.restaurant.com",
+      "bankDetails": "Payment Information"
+    },
+    "defaultTerms": "1. 30% deposit required for event bookings.\n2. Final headcount confirmation 48 hours prior.\n3. Menu changes subject to availability.",
+    "isDefault": false,
+    "featured": false,
+    "createdAt": "2024-01-12T00:00:00Z",
+    "updatedAt": "2024-01-12T00:00:00Z"
+  },
+  {
+    "Id": 5,
+    "name": "Healthcare Professional",
+    "description": "Professional template for healthcare and medical services",
+    "layout": {
+      "headerStyle": "professional",
+      "colorScheme": "medical",
+      "fontFamily": "Inter"
+    },
+    "styles": {
+      "primaryColor": "#2E8B57",
+      "secondaryColor": "#20B2AA",
+      "accentColor": "#48CAE4"
+    },
+    "defaultHeader": {
+      "companyName": "Medical Practice",
+      "companyAddress": "Clinic Address",
+      "quoteNumber": "MP-YYYY-XXX"
+    },
+    "defaultFooter": {
+      "contactEmail": "info@clinic.com",
+      "contactPhone": "+66 XX XXX XXXX",
+      "website": "www.clinic.com",
+      "bankDetails": "Payment Details"
+    },
+    "defaultTerms": "1. Payment due upon service completion.\n2. Insurance claims processed separately.\n3. Appointment cancellations require 24-hour notice.",
+    "isDefault": false,
+    "featured": false,
+    "createdAt": "2024-01-15T00:00:00Z",
+    "updatedAt": "2024-01-15T00:00:00Z"
+  },
+  {
+    "Id": 6,
+    "name": "Construction & Engineering",
+    "description": "Robust template for construction and engineering projects",
+    "layout": {
+      "headerStyle": "industrial",
+      "colorScheme": "orange",
+      "fontFamily": "Poppins"
+    },
+    "styles": {
+      "primaryColor": "#FF6B35",
+      "secondaryColor": "#2C3E50",
+      "accentColor": "#F7931E"
+    },
+    "defaultHeader": {
+      "companyName": "Construction Co.",
+      "companyAddress": "Construction Address",
+      "quoteNumber": "CC-YYYY-XXX"
+    },
+    "defaultFooter": {
+      "contactEmail": "projects@construction.com",
+      "contactPhone": "+66 XX XXX XXXX",
+      "website": "www.construction.com",
+      "bankDetails": "Project Payment Info"
+    },
+    "defaultTerms": "1. Progress payments as per milestone completion.\n2. Material price variations may apply.\n3. Project timeline subject to weather conditions.",
+    "isDefault": false,
+    "featured": true,
+    "createdAt": "2024-01-18T00:00:00Z",
+    "updatedAt": "2024-01-18T00:00:00Z"
+  }
+]
