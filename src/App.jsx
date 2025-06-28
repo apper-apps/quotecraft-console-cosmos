@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import Layout from '@/components/organisms/Layout';
 import QuotationBuilder from '@/components/pages/QuotationBuilder';
 import TemplateManager from '@/components/pages/TemplateManager';
+import ProductManager from '@/components/pages/ProductManager';
 import Login from '@/components/pages/Login';
 import Signup from '@/components/pages/Signup';
 import Callback from '@/components/pages/Callback';
@@ -124,10 +125,11 @@ function AppContent() {
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/prompt-password/:appId/:emailAddress/:provider" element={<PromptPassword />} />
           <Route path="/reset-password/:appId/:fields" element={<ResetPassword />} />
-          <Route path="/" element={<Layout />}>
+<Route path="/" element={<Layout />}>
             <Route index element={<QuotationBuilder />} />
             <Route path="quotation/:id?" element={<QuotationBuilder />} />
             <Route path="templates" element={<TemplateManager />} />
+            <Route path="products" element={<ProductManager />} />
           </Route>
         </Routes>
         
