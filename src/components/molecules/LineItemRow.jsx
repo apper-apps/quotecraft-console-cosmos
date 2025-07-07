@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import ApperIcon from '@/components/ApperIcon'
-import Input from '@/components/atoms/Input'
-import Button from '@/components/atoms/Button'
-import * as productService from '@/services/api/productService'
-const LineItemRow = ({ 
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import * as dynamicAttributeService from "@/services/api/dynamicAttributeService";
+import { formatCurrency } from "@/utils/formatters";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
+import Loading from "@/components/ui/Loading";
+import * as productService from "@/services/api/productService";
+const LineItemRow = ({
   item, 
   onUpdate, 
   onDelete, 
   index,
   currency = 'THB'
 }) => {
-  const [products, setProducts] = useState([])
+const [products, setProducts] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [showDropdown, setShowDropdown] = useState(false)
   const [loading, setLoading] = useState(false)
-
+  const [productAttributes, setProductAttributes] = useState({})
+  const [loadingAttributes, setLoadingAttributes] = useState({})
   useEffect(() => {
     const loadProducts = async () => {
       if (searchTerm.length > 1) {
@@ -48,6 +52,20 @@ const handleChange = (field, value) => {
     onUpdate(updatedItem)
   }
 
+const loadProductAttributes = async (productId) => {
+    if (productAttributes[productId] || loadingAttributes[productId]) return;
+    
+    setLoadingAttributes(prev => ({ ...prev, [productId]: true }));
+    try {
+      const attributes = await dynamicAttributeService.getByProductId(productId);
+      setProductAttributes(prev => ({ ...prev, [productId]: attributes }));
+    } catch (error) {
+      console.error('Error loading product attributes:', error);
+    } finally {
+      setLoadingAttributes(prev => ({ ...prev, [productId]: false }));
+    }
+  };
+
   const handleProductSelect = (product) => {
     const updatedItem = {
       ...item,
@@ -65,6 +83,21 @@ const handleChange = (field, value) => {
     setShowDropdown(false)
     setSearchTerm('')
   }
+
+  const formatAttributeValue = (value, dataType) => {
+    if (!value) return 'N/A';
+    
+    switch (dataType) {
+      case 'Number':
+        return parseFloat(value).toLocaleString();
+      case 'Date':
+        return new Date(value).toLocaleDateString();
+      case 'Boolean':
+        return value === 'true' || value === true ? 'Yes' : 'No';
+      default:
+        return value;
+    }
+  };
 
   const handleDescriptionChange = (value) => {
     setSearchTerm(value)
@@ -100,37 +133,68 @@ return (
           />
           
           {/* Product Search Dropdown */}
+{/* Product Search Dropdown */}
           {showDropdown && (
-            <div className="absolute top-full left-0 right-0 bg-white border border-surface-200 rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
+            <div className="absolute top-full left-0 right-0 bg-white border border-surface-200 rounded-md shadow-lg z-10 max-h-64 overflow-y-auto">
               {loading ? (
                 <div className="p-3 text-center text-surface-500">
                   <ApperIcon name="Loader2" size={16} className="animate-spin mx-auto" />
                 </div>
               ) : products.length > 0 ? (
-                products.map((product) => (
-                  <button
-                    key={product.Id}
-                    onClick={() => handleProductSelect(product)}
-                    className="w-full text-left p-3 hover:bg-surface-50 border-b border-surface-100 last:border-b-0 transition-colors"
-                  >
-                    <div className="font-medium text-sm text-gray-900">
-                      {product.product_name || product.Name}
-                    </div>
-                    <div className="text-xs text-surface-600 truncate">
-                      {product.description}
-                    </div>
-                    <div className="text-xs text-primary-600 font-medium">
-                      {formatCurrency(product.price)}
-                    </div>
-                  </button>
-                ))
+                products.map((product) => {
+                  const attributes = productAttributes[product.Id] || [];
+                  const isLoadingAttrs = loadingAttributes[product.Id];
+                  
+                  return (
+                    <button
+                      key={product.Id}
+                      onClick={() => handleProductSelect(product)}
+                      onMouseEnter={() => loadProductAttributes(product.Id)}
+                      className="w-full text-left p-3 hover:bg-surface-50 border-b border-surface-100 last:border-b-0 transition-colors"
+                    >
+                      <div className="font-medium text-sm text-gray-900">
+                        {product.product_name || product.Name}
+                      </div>
+                      <div className="text-xs text-surface-600 truncate">
+                        {product.description}
+                      </div>
+                      <div className="text-xs text-primary-600 font-medium mb-2">
+                        {formatCurrency(product.price)}
+                      </div>
+                      
+                      {/* Dynamic Attributes */}
+                      {isLoadingAttrs ? (
+                        <div className="text-xs text-surface-400 flex items-center gap-1">
+                          <ApperIcon name="Loader2" size={12} className="animate-spin" />
+                          Loading attributes...
+                        </div>
+                      ) : attributes.length > 0 ? (
+                        <div className="text-xs text-surface-500 space-y-1">
+                          <div className="font-medium text-surface-600">Attributes:</div>
+                          {attributes.slice(0, 3).map((attr) => (
+                            <div key={attr.Id} className="flex justify-between">
+                              <span className="text-surface-700">{attr.attribute_name}:</span>
+                              <span className="text-surface-600 font-medium">
+                                {formatAttributeValue(attr.attribute_value, attr.data_type)}
+                              </span>
+                            </div>
+                          ))}
+                          {attributes.length > 3 && (
+                            <div className="text-surface-400 text-xs">
+                              +{attributes.length - 3} more attributes
+                            </div>
+                          )}
+                        </div>
+                      ) : null}
+                    </button>
+                  );
+                })
               ) : searchTerm.length > 1 ? (
                 <div className="p-3 text-center text-surface-500 text-sm">
                   No products found
                 </div>
               ) : null}
             </div>
-          )}
         </div>
       </td>
       
