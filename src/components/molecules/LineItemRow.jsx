@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import * as dynamicAttributeService from "@/services/api/dynamicAttributeService";
 import { formatCurrency } from "@/utils/formatters";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Loading from "@/components/ui/Loading";
+import { getAll as getAllTemplates } from "@/services/api/templateService";
+import { getAll as getAllQuotations } from "@/services/api/quotationService";
 import * as productService from "@/services/api/productService";
+import * as dynamicAttributeService from "@/services/api/dynamicAttributeService";
 const LineItemRow = ({
   item, 
   onUpdate, 
@@ -131,13 +133,12 @@ return (
             onFocus={() => setShowDropdown(searchTerm.length > 1)}
             onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
           />
+/>
           
           {/* Product Search Dropdown */}
-{/* Product Search Dropdown */}
           {showDropdown && (
             <div className="absolute top-full left-0 right-0 bg-white border border-surface-200 rounded-md shadow-lg z-10 max-h-64 overflow-y-auto">
               {loading ? (
-                <div className="p-3 text-center text-surface-500">
                   <ApperIcon name="Loader2" size={16} className="animate-spin mx-auto" />
                 </div>
               ) : products.length > 0 ? (
