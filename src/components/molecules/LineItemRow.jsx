@@ -5,8 +5,8 @@ import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
 import Loading from "@/components/ui/Loading";
-import { getAll, getAllTemplates } from "@/services/api/templateService";
-import { getAll as getAllQuotations, getAllQuotations as getQuotations } from "@/services/api/quotationService";
+import { getAll as getAllTemplates, getAllTemplates as getTemplates } from "@/services/api/templateService";
+import { getAll as getAllQuotations, getQuotations } from "@/services/api/quotationService";
 import * as productService from "@/services/api/productService";
 import * as dynamicAttributeService from "@/services/api/dynamicAttributeService";
 const LineItemRow = ({
@@ -123,7 +123,7 @@ return (
       transition={{ duration: 0.2, delay: index * 0.05 }}
       className="hover:bg-surface-50 transition-colors duration-200"
     >
-      <td className="px-4 py-3 border-b border-surface-200 relative">
+<td className="px-4 py-3 border-b border-surface-200 relative">
         <div className="relative">
           <Input
             value={item.description || ''}
@@ -133,11 +133,10 @@ return (
             onFocus={() => setShowDropdown(searchTerm.length > 1)}
             onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
           />
-/>
           
           {/* Product Search Dropdown */}
           {showDropdown && (
-<div className="absolute top-full left-0 right-0 bg-white border border-surface-200 rounded-md shadow-lg z-10 max-h-64 overflow-y-auto">
+            <div className="absolute top-full left-0 right-0 bg-white border border-surface-200 rounded-md shadow-lg z-10 max-h-64 overflow-y-auto">
               {loading ? (
                 <div className="p-3 text-center">
                   <ApperIcon name="Loader2" size={16} className="animate-spin mx-auto" />
