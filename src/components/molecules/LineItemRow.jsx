@@ -180,7 +180,7 @@ return (
                               </span>
                             </div>
                           ))}
-                          {attributes.length > 3 && (
+{attributes.length > 3 && (
                             <div className="text-surface-400 text-xs">
                               +{attributes.length - 3} more attributes
                             </div>
@@ -196,6 +196,7 @@ return (
                 </div>
               ) : null}
             </div>
+          )}
         </div>
       </td>
       
